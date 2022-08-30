@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-xs-12">
+        <form (ngSubmit)="additem()" #f="ngForm">
+            <div class="row">
+                <div class="col-sm-5 form-group">
+                    <label for="name">Name</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        name="name" 
+                        ngModel 
+                        required>
+                        <small class="help-block" style="color: red" 
+                           *ngIf="f.form.controls['name'].touched && f.form.controls['name'].invalid">
+                        <em>
+                            <strong>
+                                This field is mandatory
+                            </strong>
+                        </em>
+                    </small>
+                </div>
+                <div class="col-sm-2 form-group">
+                    <label for="amount">Amount</label>
+                    <input 
+                        type="number" 
+                        class="form-control" 
+                        name="amount" 
+                        ngModel 
+                        required
+                        pattern="^[1-9]+[0-9]*$">
+                    <small class="help-block" style="color: red" 
+                           *ngIf="f.form.controls['amount'].touched && f.form.controls['amount'].invalid">
+                        <em>
+                            <strong>
+                                This field is mandatory
+                            </strong>
+                        </em>
+                    </small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button 
+                        type="submit" 
+                        class="btn btn-success"
+                        [disabled]="!f.valid">
+                        {{editMode===true ? 'Update': 'Add'}}
+                    </button>
+                    <button 
+                        *ngIf="editMode"
+                        type="button" 
+                        class="btn btn-danger"
+                        (click)="onDelete()">
+                        Delete
+                    </button>
+                    <button 
+                        type="button" 
+                        class="btn btn-primary"
+                        (click)="onClear()">
+                        Clear
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
