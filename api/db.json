@@ -1,0 +1,73 @@
+{
+  "recipes": [
+    {
+      "id": 0,
+      "name": "A Burger",
+      "description": "Burger is very tasty",
+      "imagePath": "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F44%2F2020%2F03%2F03%2F7782449.jpg",
+      "ingredients": [
+        {
+          "name": "Meat",
+          "amount": 2
+        },
+        {
+          "name": "Wheat",
+          "amount": 4
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "A Pizza",
+      "description": "Pizza is very tasty",
+      "imagePath": "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F44%2F2020%2F03%2F03%2F7782449.jpg",
+      "ingredients": [
+        {
+          "name": "Meat",
+          "amount": 2
+        },
+        {
+          "name": "Wheat",
+          "amount": 4
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "A Donus",
+      "description": "Donut is very tasty",
+      "imagePath": "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F44%2F2020%2F03%2F03%2F7782449.jpg",
+      "ingredients": [
+        {
+          "name": "Meat",
+          "amount": 2
+        },
+        {
+          "name": "Wheat",
+          "amount": 4
+        }
+      ]
+    },
+    {
+      "name": "Bihari Litti",
+      "description": "Bihari litti is world famous snacks.",
+      "imagePath": "https://recipesinhindi.net/wp-content/uploads/2019/08/Litti-chokha.jpg",
+      "ingredients": [
+        {
+          "name": "Sattu",
+          "amount": 4
+        },
+        {
+          "name": "Maida",
+          "amount": 5
+        },
+        {
+          "name": "Ajwayin",
+          "amount": 1
+        }
+      ],
+      "id": 3
+    }
+  ],
+  "ingredients": []
+}

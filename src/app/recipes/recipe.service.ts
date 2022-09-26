@@ -1,45 +1,43 @@
 import { EventEmitter, Injectable } from "@angular/core";
-import { BehaviorSubject, Subject } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { Ingredient } from "../shared/ingredients.model";
 import { ShoppingListService } from "../shopping-list/shopping-list.service";
 import { Recipe } from "./model/recipe.model";
+import { HttpClient } from '@angular/common/http';
+
 @Injectable()
 export class RecipeService{
-    constructor(private _slService: ShoppingListService){}
-    private recipeList: Recipe[] = [
-        new Recipe(
-            'A Burger', 
-            'Burger is very tasty', 
-            'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F44%2F2020%2F03%2F03%2F7782449.jpg',
-            [new Ingredient('Meat', 2), new Ingredient('Wheat', 4)]
-            ),
-        new Recipe(
-            'A Pizza', 
-            'Pizza is very tasty', 
-            'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F44%2F2020%2F03%2F03%2F7782449.jpg',
-            [new Ingredient('Meat', 2), new Ingredient('Wheat', 4)]
-            ),
-        new Recipe(
-            'A Donut', 
-            'Donut is very tasty', 
-            'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F44%2F2020%2F03%2F03%2F7782449.jpg',
-            [new Ingredient('Meat', 2), new Ingredient('Wheat', 4)]),
-        new Recipe(
-            'A Litti', 
-            'Litti is very tasty', 
-            'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F44%2F2020%2F03%2F03%2F7782449.jpg',
-            [new Ingredient('Meat', 2), new Ingredient('Wheat', 4)])
-    ];
+    recipeChangedEvent = new Subject<Recipe[]>();
+    constructor(
+        private _slService: ShoppingListService,
+        private _http: HttpClient){}
 
-    getRecipes(): Recipe[]{
-        return [...this.recipeList];
+    getRecipes(): Observable<Recipe[]>{
+        let url = "/api/recipes";
+        return this._http.get<Recipe[]>(url);
     }
 
-    getOneRecipe(id: number): Recipe{
-       return this.recipeList[id];
+    getOneRecipe(id: number): Observable<Recipe>{
+        let url = "/api/recipes/"+id;
+        return this._http.get<Recipe>(url);
     }
 
     addToShoppingList(ingredients: Ingredient[]){
-        this._slService.addToShoppingList(ingredients);
+        return this._slService.addToShoppingList(ingredients);
+    }
+
+    addRecipe(recipe: Recipe): Observable<Recipe>{
+        let url = '/api/recipes';
+        return this._http.post<Recipe>(url, recipe);
+    }
+
+    updateRecipe(index: number, recipe: Recipe): Observable<Recipe>{
+        let url = '/api/recipes/'+index;
+        return this._http.put<Recipe>(url, recipe);
+    }
+
+    deleteRecipe(index: number){
+        let url = "/api/recipes/"+index;
+        return this._http.delete(url);
     }
 }

@@ -1,35 +1,48 @@
-import { Subject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable, Subject } from "rxjs";
 import { Ingredient } from "../shared/ingredients.model";
+import { Logger } from "../shared/logger.service";
 
+@Injectable()
 export class ShoppingListService{
     ingredientsAdded = new Subject<Ingredient[]>();
     editemItemIndexObservable = new Subject<number>();
-    private ingredients: Ingredient[] = [
-        new Ingredient('Apples', 5)
-      ];
 
-    getIngredients(): Ingredient[]{
-        return [...this.ingredients];
-    }
+    constructor(private _http: HttpClient, private _logger: Logger){}
 
-    getIngredient(index: number): Ingredient{
-        return this.getIngredients()[index];
+    getIngredients(): Observable<Ingredient[]>{
+        this._logger.logMessage('The getIngredients has been called!');
+        let url = '/api/ingredients';
+        return this._http.get<Ingredient[]>(url);
     }
 
-    addShoppingItem(ing: Ingredient): void{
-        this.ingredients.push(new Ingredient(ing.name, ing.amount));
-        this.ingredientsAdded.next([...this.ingredients]);
+    getIngredient(index: number): Observable<Ingredient>{
+        let url = '/api/ingredients/'+index;
+        return this._http.get<Ingredient>(url);
     }
-    addToShoppingList(ingredients: Ingredient[]){
-        this.ingredients.push(...ingredients);
-        this.ingredientsAdded.next([...this.ingredients]);
+
+    addShoppingItem(ing: Ingredient): Observable<Ingredient>{
+        let url = '/api/ingredients';
+        return this._http.post<Ingredient>(url, ing);
     }
-    updateIngredient(index: number, newItem: Ingredient){
-        this.ingredients[index] = newItem;
-        this.ingredientsAdded.next([...this.ingredients]);
+
+    addToShoppingList(ingredients: Ingredient[]): Ingredient[]{
+        let url = '/api/ingredients';
+        let response: Array<Ingredient> = [];
+        ingredients.forEach(async (ingredient: Ingredient) => {
+            let responseData: any = await this._http.post(url,ingredient).toPromise();
+            response.push(responseData);
+        })
+        return response;
     }
+    updateIngredient(index: number, newItem: Ingredient): Observable<Ingredient>{
+        let url = '/api/ingredients/'+index;
+        return this._http.patch<Ingredient>(url, newItem);
+    }
+
     deleteIngredient(index: number){
-        this.ingredients.splice(index, 1);
-        this.ingredientsAdded.next([...this.ingredients]);
+        let url = '/api/ingredients/'+index;
+        return this._http.delete(url);
     }
 }

@@ -11,7 +11,7 @@
                         ngModel 
                         required>
                         <small class="help-block" style="color: red" 
-                           *ngIf="f.form.controls['name'].touched && f.form.controls['name'].invalid">
+                           *ngIf="f.form.controls['name']?.touched && f.form.controls['name']?.invalid">
                         <em>
                             <strong>
                                 This field is mandatory
@@ -29,7 +29,7 @@
                         required
                         pattern="^[1-9]+[0-9]*$">
                     <small class="help-block" style="color: red" 
-                           *ngIf="f.form.controls['amount'].touched && f.form.controls['amount'].invalid">
+                           *ngIf="f.form.controls['amount']?.touched && f.form.controls['amount']?.invalid">
                         <em>
                             <strong>
                                 This field is mandatory

@@ -9,16 +9,22 @@ import { ShoppingListService } from './shopping-list.service';
   styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
-  ingredients: Ingredient[];
+  ingredients: Ingredient[] = [];
   shoppingSubscription: Subscription;
+
   constructor(private _shoppingListService: ShoppingListService) { }
+
   ngOnDestroy(): void {
     this.shoppingSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.ingredients = this._shoppingListService.getIngredients();
-    this.shoppingSubscription = this._shoppingListService.ingredientsAdded.subscribe(ingredients => this.ingredients = ingredients)
+    this._shoppingListService.getIngredients().subscribe((ingredients: Ingredient[]) => {
+      this.ingredients = ingredients;
+    })
+    
+    this.shoppingSubscription = this._shoppingListService.ingredientsAdded
+                                .subscribe(ingredients => this.ingredients = ingredients)
   }
 
   editItem(id: number){
